@@ -100,11 +100,10 @@ def update_book(book_id: int, updated_book: dict):
 
     Returns:
         dict: The updated book, or an error message if not found."""
-    for index, book in enumerate(database):
-        if book["id"] == book_id:
-            database[index] = updated_book
-            return updated_book
-    raise HTTPException(status_code=404, detail="Book not found")
+
+    book = get_book(book_id)
+    book.update(updated_book)
+    return book
 
 
 def delete_book(book_id: int):
