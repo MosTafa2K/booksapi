@@ -15,7 +15,7 @@ def books_list_endpoint():
 @api.post("/books", response_model=BookDetailResponse)
 def insert_book_endpoint(book_data: BookCreate):
     """Create a new book from the request body and return it."""
-    book = create_book(book_data)
+    book = create_book(book_data.model_dump())
     return book
 
 

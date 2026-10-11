@@ -88,7 +88,7 @@ def create_book(data: dict):
         **data,
     }
     database.append(new_book)
-    return Response(new_book, status_code=status.HTTP_201_CREATED)
+    return new_book
 
 
 def update_book(book_id: int, updated_book: dict):
