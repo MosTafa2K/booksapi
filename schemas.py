@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from pydantic import BaseModel, Field
 
 
@@ -15,7 +13,7 @@ class BookCreate(BaseModel):
     author: Author
     genre: str
     available: bool
-    published_year: datetime = Field(min_length=4, max_length=4)
+    published_year: int = Field(ge=1700, le=9999)
 
 
 class BookResponse(BaseModel):
