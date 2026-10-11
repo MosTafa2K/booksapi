@@ -28,3 +28,5 @@ class BookResponse(BaseModel):
 
 class BookDetailResponse(BookCreate):
     id: int
+    description: str
+    author: Author
