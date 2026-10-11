@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 from book_crud import create_book, delete_book, get_all_books, get_book, update_book
-from schemas import BookCreate, BookDetailResponse, BookResponse
+from schemas import BookCreate, BookDetailResponse, BookResponse, BookUpdate
 
 api = FastAPI()
 
@@ -26,10 +26,11 @@ def get_single_book_endpoint(book_id: int):
     return book
 
 
-@api.patch("/books/{book_id}", response_model=BookResponse)
-def update_book_endpoint(book_id: int, update_data: dict):
+@api.patch("/books/{book_id}", response_model=BookDetailResponse)
+def update_book_endpoint(book_id: int, update_data: BookUpdate):
     """Apply the supplied fields to the book identified by ``book_id``."""
-    book = update_book(book_id, update_data)
+    updated_data = update_data.model_dump(exclude_unset=True, exclude_none=True)
+    book = update_book(book_id, updated_data)
     return book
 
 

@@ -29,3 +29,12 @@ class BookDetailResponse(BookCreate):
     id: int
     description: str
     author: Author
+
+
+class BookUpdate(BaseModel):
+    title: str | None = None
+    isbn: str | None = None
+    description: str | None = None
+    genre: str | None = None
+    available: bool | None = None
+    published_year: int | None = None
