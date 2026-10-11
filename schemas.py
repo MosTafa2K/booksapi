@@ -19,11 +19,12 @@ class BookCreate(BaseModel):
 
 
 class BookResponse(BaseModel):
+    id: int
     title: str
     isbn: str
     genre: str
     available: bool
-    published_year: datetime = Field(min_length=4, max_length=4)
+    published_year: int
 
 
 class BookDetailResponse(BookCreate):
