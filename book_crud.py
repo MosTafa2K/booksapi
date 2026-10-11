@@ -114,11 +114,6 @@ def delete_book(book_id: int):
 
     Returns:
         dict: A success message, or an error message if the book is not found."""
-    for index, book in enumerate(database):
-        if book["id"] == book_id:
-            database.pop(index)
-            return Response(
-                {"message": "Book deleted successfully"},
-                status_code=status.HTTP_204_NO_CONTENT,
-            )
-    raise HTTPException(status_code=404, detail="Book not found")
+    book = get_book(book_id)
+    database.remove(book)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
