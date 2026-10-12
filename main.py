@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, status
 
 from book_crud import create_book, delete_book, get_all_books, get_book, update_book
 from schemas import BookCreate, BookDetailResponse, BookResponse, BookUpdate
@@ -34,8 +34,7 @@ def update_book_endpoint(book_id: int, update_data: BookUpdate):
     return book
 
 
-@api.delete("/books/{book_id}")
+@api.delete("/books/{book_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_book_endpoint(book_id: int):
     """Delete the book identified by ``book_id``."""
-    response = delete_book(book_id)
-    return response
+    delete_book(book_id)

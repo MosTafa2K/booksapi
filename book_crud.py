@@ -1,4 +1,4 @@
-from fastapi import HTTPException, Response, status
+from fastapi import HTTPException
 
 from helper import search_book
 
@@ -119,4 +119,3 @@ def delete_book(book_id: int):
         dict: A success message, or an error message if the book is not found."""
     book = get_book(book_id)
     database.remove(book)
-    return Response(status_code=status.HTTP_204_NO_CONTENT)
