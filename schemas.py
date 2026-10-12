@@ -37,4 +37,4 @@ class BookUpdate(BaseModel):
     description: str | None = None
     genre: str | None = None
     available: bool | None = None
-    published_year: int | None = None
+    published_year: int | None = Field(default=None, ge=1700, le=9999)
