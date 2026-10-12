@@ -84,7 +84,7 @@ def create_book(data: dict):
     Returns:
         dict: The created book."""
     new_book = {
-        "id": len(database) + 1,
+        "id": max((book["id"] for book in database), default=0) + 1,
         **data,
     }
     database.append(new_book)
