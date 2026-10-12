@@ -1,5 +1,7 @@
 from fastapi import HTTPException, Response, status
 
+from helper import search_book
+
 database: list[dict] = [
     {
         "id": 1,
@@ -69,9 +71,10 @@ def get_book(book_id: int):
 
     Returns:
         dict: The book with the specified ID, or an error message if not found."""
-    for book in database:
-        if book["id"] == book_id:
-            return book
+    book_index = search_book(database, book_id)
+    if book_index is not None:
+        book = database[book_index]
+        return book
     raise HTTPException(status_code=404, detail="Book not found")
 
 
