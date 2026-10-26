@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from sqlmodel import Session, select, update
+from sqlmodel import Session, select
 
 from .models import Author, Book
 from .schemas import BookCreate, BookUpdate
@@ -50,17 +50,25 @@ def update_book(book_id: int, updated_book: BookUpdate, db: Session):
 
     Returns:
         dict: The updated book, or an error message if not found."""
-    stmt = (
-        update(Book)
-        .where(Book.id == book_id)
-        .values(**updated_book.model_dump(exclude_unset=True, exclude_none=True))
-        .returning(Book)
-    )
-    result = db.exec(stmt)
-    row = result.one_or_none()
-    new_book = row[0]
-    db.commit()
-    return new_book if new_book is not None else None
+    book = db.get(Book, book_id)
+    if book is not None:
+        update_data = updated_book.model_dump(
+            exclude_none=True,
+            exclude_unset=True,
+        )
+        author_data = update_data.pop("author", None)
+
+        for key, value in update_data.items():
+            setattr(book, key, value)
+
+        if author_data is not None:
+            author = book.author
+            for key, value in author_data.items():
+                setattr(author, key, value)
+        db.add(book)
+        db.commit()
+        db.refresh(book)
+        return book
 
 
 def delete_book(book_id: int, db: Session):
