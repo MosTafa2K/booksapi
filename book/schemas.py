@@ -6,6 +6,9 @@ class Author(BaseModel):
     first_name: str
     last_name: str
 
+class AuthorUpdate(BaseModel):
+    first_name: str | None = None
+    last_name: str | None = None
 
 class BookCreate(BaseModel):
     title: str
@@ -37,5 +40,6 @@ class BookUpdate(BaseModel):
     isbn: str | None = None
     description: str | None = None
     genre: str | None = None
+    author: AuthorUpdate | None = None
     available: bool | None = None
     published_year: int | None = Field(default=None, ge=1700, le=9999)
